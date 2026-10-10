@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elena Vance — Fine Art Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        canvas: '#FAF9F6',
+                        'canvas-muted': '#F2F0EB',
+                        'canvas-dark': '#1A1918',
+                        charcoal: '#1A1A1A',
+                        stone: '#8A8880',
+                        bordercolor: '#E5E3DC',
+                        accent: '#8C6D46'
+                    },
+                    fontFamily: {
+                        serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        body {
+            background-color: #FAF9F6;
+            color: #1A1A1A;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, .font-serif-heading {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* Smooth custom lightbox animations */
+        .modal-backdrop {
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .modal-content {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Gallery hover effects */
+        .artwork-card .artwork-overlay {
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .artwork-card:hover .artwork-overlay {
+            opacity: 1;
+        }
+        .artwork-card img {
+            transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .artwork-card:hover img {
+            transform: scale(1.03);
+        }
+
+        /* Custom subtle scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF9F6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D5D3CB;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #A8A69E;
+        }
+    </style>
+</head>
+<body class="selection:bg-stone/20 selection:text-charcoal relative min-h-screen flex flex-col justify-between">
+
+    <!-- Header Navigation -->
+    <header id="main-header" class="fixed top-0 left-0 w-full z-40 bg-canvas/90 backdrop-blur-md border-b border-bordercolor/60 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+            
+            <!-- Artist Name / Brand -->
+            <a href="#" class="group flex flex-col">
+                <span class="font-serif text-2xl tracking-wide text-charcoal group-hover:text-stone transition-colors duration-200">ELENA VANCE</span>
+                <span class="text-[10px] tracking-[0.25em] text-stone uppercase font-light">Visual Artist & Painter</span>
+            </a>
+
+            <!-- Desktop Links -->
+            <nav class="hidden md:flex items-center space-x-10 text-xs tracking-[0.18em] uppercase text-charcoal/80 font-medium">
+                <a href="#featured" class="hover:text-accent transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-accent hover:after:w-full after:transition-all">Featured</a>
+                <a href="#gallery" class="hover:text-accent transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-accent hover:after:w-full after:transition-all">Works</a>
+                <a href="#about" class="hover:text-accent transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-accent hover:after:w-full after:transition-all">About & CV</a>
+                <a href="#inquiry" class="hover:text-accent transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-accent hover:after:w-full after:transition-all">Inquire</a>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-btn" class="md:hidden text-charcoal hover:text-stone p-2 focus:outline-none" aria-label="Toggle menu">
+                <i class="ph ph-list text-2xl" id="menu-icon"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-canvas border-b border-bordercolor px-6 py-6 flex flex-col space-y-4 text-xs tracking-widest uppercase">
+            <a href="#featured" class="mobile-nav-link py-2 text-charcoal hover:text-accent">Featured Showcase</a>
+            <a href="#gallery" class="mobile-nav-link py-2 text-charcoal hover:text-accent">Selected Works</a>
+            <a href="#about" class="mobile-nav-link py-2 text-charcoal hover:text-accent">About & Statement</a>
+            <a href="#about-cv" class="mobile-nav-link py-2 text-charcoal hover:text-accent">Exhibition CV</a>
+            <a href="#inquiry" class="mobile-nav-link py-2 text-charcoal hover:text-accent">Acquisitions & Inquiry</a>
+        </div>
+    </header>
+
+    <main class="pt-20 flex-grow">
+
+        <!-- Hero Featured Artwork Showcase -->
+        <section id="featured" class="relative min-h-[calc(100vh-5rem)] flex items-center justify-center py-16 px-6 lg:px-12 overflow-hidden">
+            <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Artwork Image -->
+                <div class="lg:col-span-7 relative group cursor-pointer" onclick="openLightboxById('work-hero')">
+                    <div class="relative overflow-hidden shadow-2xl bg-stone/10 aspect-[4/3] rounded-sm">
+                        <img 
+                            src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1600&q=85" 
+                            alt="Whispers of Light in Autumn" 
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            onerror="this.src='https://placehold.co/1200x900/f0eee9/333333?text=Fine+Art+Artwork'"
+                        />
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300"></div>
+                        <div class="absolute bottom-4 right-4 bg-canvas/90 backdrop-blur-md px-3 py-1.5 rounded text-[11px] uppercase tracking-widest text-charcoal opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1.5 shadow-sm">
+                            <i class="ph ph-arrows-out-simple"></i> View Detail
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Text / Statement -->
+                <div class="lg:col-span-5 flex flex-col justify-center space-y-6">
+                    <div class="flex items-center space-x-3">
+                        <span class="h-[1px] w-8 bg-accent"></span>
+                        <span class="text-xs uppercase tracking-[0.25em] text-accent font-medium">Current Feature</span>
+                    </div>
+
+                    <h1 class="font-serif text-4xl lg:text-5xl lg:leading-tight text-charcoal font-normal">
+                        Whispers of Light in Autumn
+                    </h1>
+
+                    <p class="text-stone text-sm leading-relaxed font-light">
+                        2024 · Oil on Belgian Linen · 130 × 160 cm
+                    </p>
+
+                    <p class="text-charcoal/80 text-sm leading-relaxed font-light">
+                        An exploration of transient atmosphere and tactile memory. Layers of translucent oil glaze capture the quiet threshold where landscape yields to abstract emotion.
+                    </p>
+
+                    <div class="pt-4 flex flex-wrap items-center gap-4">
+                        <button onclick="openLightboxById('work-hero')" class="px-7 py-3.5 bg-charcoal text-canvas text-xs uppercase tracking-[0.2em] hover:bg-accent transition-colors duration-300 rounded-xs">
+                            View Artwork
+                        </button>
+                        <a href="#gallery" class="px-7 py-3.5 border border-charcoal/30 text-charcoal text-xs uppercase tracking-[0.2em] hover:border-charcoal hover:bg-charcoal/5 transition-colors duration-300 rounded-xs">
+                            Explore Gallery
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-20 px-6 lg:px-12 border-t border-bordercolor/60 bg-canvas">
+            <div class="max-w-7xl mx-auto">
+                
+                <!-- Section Header -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-6 border-b border-bordercolor/60 gap-6">
+                    <div>
+                        <span class="text-xs uppercase tracking-[0.25em] text-stone font-medium">Curated Selection</span>
+                        <h2 class="font-serif text-3xl md:text-4xl text-charcoal mt-1">Artwork Gallery</h2>
+                    </div>
+
+                    <!-- Category Filter Tabs -->
+                    <div class="flex flex-wrap gap-2 md:gap-4 text-xs tracking-wider uppercase" id="filter-tabs">
+                        <button data-filter="all" class="filter-btn active px-4 py-2 border border-charcoal bg-charcoal text-canvas transition-all duration-200">
+                            All Works
+                        </button>
+                        <button data-filter="oil" class="filter-btn px-4 py-2 border border-bordercolor text-charcoal/70 hover:border-charcoal hover:text-charcoal transition-all duration-200">
+                            Oil Series
+                        </button>
+                        <button data-filter="drawings" class="filter-btn px-4 py-2 border border-bordercolor text-charcoal/70 hover:border-charcoal hover:text-charcoal transition-all duration-200">
+                            Drawings & Sketches
+                        </button>
+                        <button data-filter="recent" class="filter-btn px-4 py-2 border border-bordercolor text-charcoal/70 hover:border-charcoal hover:text-charcoal transition-all duration-200">
+                            Recent Works
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Gallery Grid -->
+                <div id="gallery-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+                    <!-- Artwork items will be rendered dynamically via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Artist About & CV Section -->
+        <section id="about" class="py-24 px-6 lg:px-12 bg-canvas-muted/50 border-t border-bordercolor/60">
+            <div class="max-w-7xl mx-auto">
+                
+                <!-- Artist Bio & Statement -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start mb-24">
+                    
+                    <!-- Artist Portrait -->
+                    <div class="lg:col-span-5">
+                        <div class="relative max-w-md mx-auto lg:max-w-none">
+                            <img 
+                                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1000&q=80" 
+                                alt="Elena Vance in studio" 
+                                class="w-full h-auto grayscale contrast-105 rounded-xs shadow-md"
+                                onerror="this.src='https://placehold.co/800x1000/e0ddd5/333333?text=Elena+Vance'"
+                            />
+                            <div class="mt-4 text-xs text-stone tracking-wide flex justify-between italic font-serif">
+                                <span>Elena Vance in her Paris studio, 2024</span>
+                                <span>Photo: M. Laurent</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Artist Statement Text -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <span class="text-xs uppercase tracking-[0.25em] text-accent font-medium">Artist Statement</span>
+                        <h2 class="font-serif text-3xl md:text-4xl text-charcoal leading-snug">
+                            "Painting is an act of listening to the quiet spaces between light, matter, and memory."
+                        </h2>
+                        
+                        <div class="space-y-4 text-charcoal/80 text-sm leading-relaxed font-light">
+                            <p>
+                                Born in Zurich and currently working between Paris and Berlin, Elena Vance’s practice centers on the physical dynamics of pigment and organic surfaces. Her oil compositions investigate how light fractures through multi-layered glazes, evoking landscapes that exist at the boundary of tangible geography and meditative abstraction.
+                            </p>
+                            <p>
+                                Working primarily on fine Belgian linen and hand-prepared cotton rag, Vance applies pigments, cold wax, and charcoal in slow, contemplative strata. Each painting undergoes multiple cycles of addition and reductive scraping, leaving behind visible traces of time and process.
+                            </p>
+                            <p>
+                                Her works are included in notable private and museum collections across Europe, North America, and East Asia.
+                            </p>
+                        </div>
+
+                        <!-- Quick Representation Card -->
+                        <div class="pt-6 border-t border-bordercolor grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs">
+                            <div>
+                                <h4 class="font-serif text-lg text-charcoal mb-1">Primary Gallery Representation</h4>
+                                <p class="text-stone">Galerie L’Éther — Paris</p>
+                                <p class="text-stone">Vanguard Contemporary — London</p>
+                            </div>
+                            <div>
+                                <h4 class="font-serif text-lg text-charcoal mb-1">Studio Location</h4>
+                                <p class="text-stone">11th Arrondissement, Paris</p>
+                                <p class="text-stone">By appointment only</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Curriculum Vitae / Exhibition History -->
+                <div id="about-cv" class="pt-12 border-t border-bordercolor">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="text-center mb-16">
+                            <span class="text-xs uppercase tracking-[0.25em] text-stone font-medium">Exhibition Record</span>
+                            <h2 class="font-serif text-3xl md:text-4xl text-charcoal mt-1">Curriculum Vitae</h2>
+                        </div>
+
+                        <div class="space-y-12">
+                            
+                            <!-- Selected Solo Exhibitions -->
+                            <div>
+                                <h3 class="font-serif text-2xl text-charcoal mb-6 pb-2 border-b border-bordercolor flex items-center justify-between">
+                                    <span>Selected Solo Exhibitions</span>
+                                    <span class="text-xs font-sans text-stone uppercase tracking-widest">2018 — Present</span>
+                                </h3>
+                                <ul class="space-y-4 text-sm">
+                                    <li class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                                        <span class="font-medium text-charcoal">Whispers of the Unseen <span class="font-light text-stone">— Galerie L’Éther</span></span>
+                                        <span class="text-xs text-stone tracking-wide">Paris, France (2024)</span>
+                                    </li>
+                                    <li class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                                        <span class="font-medium text-charcoal">Resonance & Horizon <span class="font-light text-stone">— Vanguard Contemporary</span></span>
+                                        <span class="text-xs text-stone tracking-wide">London, UK (2023)</span>
+                                    </li>
+                                    <li class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                                        <span class="font-medium text-charcoal">Epitaphs of Color <span class="font-light text-stone">— Kunsthalle Basel Focus</span></span>
+                                        <span class="text-xs text-stone tracking-wide">Basel, Switzerland (2021)</span>
+                                    </li>
+                                    <li class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                                        <span class="font-medium text-charcoal">Silent Geometries <span class="font-light text-stone">— Studio 44 Project Space</span></span>
+                                        <span class="text-xs text-stone tracking-wide">Berlin, Germany (2019)</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Selected Group Exhibitions -->
+                            <div>
+                                <h3 class="font-serif text-2xl text-charcoal mb-6 pb-2 border-b border-bordercolor flex items-center justify-between">
+                                    <span>Selected Group Exhibitions & Fairs</span>
+                                    <span class="text-xs font-sans text-stone uppercase tracking-widest">International</span>
+                                </h3>
+                                <ul class="space-y-4 text-sm">
+                                    <li class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                                        <span class="font-medium text-charcoal">Art Basel Paris Contemporary Section <span class="font-light text-stone">— Grand Palais</span></span>
+                                        <span class="text-xs text-stone tracking-wide">Paris (2024)</span>
+                                    </li>
+                                    <li class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                                        <span class="font-medium text-charcoal">Materiality in Motion <span class="font-light text-stone">— Kyoto Museum of Modern Art</span></span>
+                                        <span class="text-xs text-stone tracking-wide">Kyoto, Japan (2023)</span>
+                                    </li>
+                                    <li class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                                        <span class="font-medium text-charcoal">Frieze London Selected Painters <span class="font-light text-stone">— Regent's Park</span></span>
+                                        <span class="text-xs text-stone tracking-wide">London, UK (2022)</span>
+                                    </li>
+                                    <li class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                                        <span class="font-medium text-charcoal">New European Abstraction <span class="font-light text-stone">— Chelsea Arts Center</span></span>
+                                        <span class="text-xs text-stone tracking-wide">New York, USA (2020)</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Public & Private Collections -->
+                            <div>
+                                <h3 class="font-serif text-2xl text-charcoal mb-6 pb-2 border-b border-bordercolor">
+                                    Public & Corporate Collections
+                                </h3>
+                                <p class="text-sm text-charcoal/80 leading-relaxed font-light">
+                                    Swiss National Art Foundation (Bern) · Fondation Modernité (Geneva) · The Regent Collection (London) · Hotel de Crillon Permanent Art Collection (Paris) · Private collections in New York, Tokyo, Zurich, Seoul, and London.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Gallery Inquiry / Contact Section -->
+        <section id="inquiry" class="py-24 px-6 lg:px-12 bg-canvas">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <span class="text-xs uppercase tracking-[0.25em] text-accent font-medium">Acquisitions & Press</span>
+                    <h2 class="font-serif text-3xl md:text-4xl text-charcoal mt-1">Gallery Inquiry</h2>
+                    <p class="text-stone text-sm max-w-lg mx-auto mt-3 font-light">
+                        For artwork availability, gallery acquisition inquiries, private commission requests, or exhibition catalogs, please submit your request below.
+                    </p>
+                </div>
+
+                <form id="contact-form" class="bg-canvas border border-bordercolor p-8 sm:p-12 shadow-sm space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Name -->
+                        <div>
+                            <label for="name" class="block text-xs uppercase tracking-wider text-charcoal mb-2 font-medium">Full Name *</label>
+                            <input type="text" id="name" required class="w-full bg-canvas-muted/40 border border-bordercolor px-4 py-3 text-sm text-charcoal focus:outline-none focus:border-charcoal transition-colors rounded-xs" placeholder="Collector / Institution Name">
+                        </div>
+                        
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-xs uppercase tracking-wider text-charcoal mb-2 font-medium">Email Address *</label>
+                            <input type="email" id="email" required class="w-full bg-canvas-muted/40 border border-bordercolor px-4 py-3 text-sm text-charcoal focus:outline-none focus:border-charcoal transition-colors rounded-xs" placeholder="name@domain.com">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Subject / Artwork Interest -->
+                        <div>
+                            <label for="subject" class="block text-xs uppercase tracking-wider text-charcoal mb-2 font-medium">Inquiry Type</label>
+                            <select id="subject" class="w-full bg-canvas-muted/40 border border-bordercolor px-4 py-3 text-sm text-charcoal focus:outline-none focus:border-charcoal transition-colors rounded-xs">
+                                <option value="artwork-acquisition">Artwork Acquisition / Price Request</option>
+                                <option value="gallery-representation">Gallery Representation / Exhibition</option>
+                                <option value="commission">Private Commission Proposal</option>
+                                <option value="press">Press & Publication Inquiry</option>
+                            </select>
+                        </div>
+
+                        <!-- Preferred Gallery Contact -->
+                        <div>
+                            <label for="gallery-location" class="block text-xs uppercase tracking-wider text-charcoal mb-2 font-medium">Preferred Regional Gallery</label>
+                            <select id="gallery-location" class="w-full bg-canvas-muted/40 border border-bordercolor px-4 py-3 text-sm text-charcoal focus:outline-none focus:border-charcoal transition-colors rounded-xs">
+                                <option value="direct">Direct Studio (Paris)</option>
+                                <option value="paris">Galerie L’Éther (Paris)</option>
+                                <option value="london">Vanguard Contemporary (London)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Selected Artwork Title Reference (if coming from Lightbox) -->
+                    <div id="artwork-ref-container" class="hidden p-3 bg-canvas-muted border border-bordercolor text-xs flex justify-between items-center">
+                        <span class="text-charcoal font-medium">Regarding Work: <span id="artwork-ref-title" class="italic font-serif text-sm text-accent"></span></span>
+                        <button type="button" onclick="clearArtworkRef()" class="text-stone hover:text-charcoal text-xs">Clear</button>
+                    </div>
+
+                    <!-- Message -->
+                    <div>
+                        <label for="message" class="block text-xs uppercase tracking-wider text-charcoal mb-2 font-medium">Message *</label>
+                        <textarea id="message" rows="5" required class="w-full bg-canvas-muted/40 border border-bordercolor p-4 text-sm text-charcoal focus:outline-none focus:border-charcoal transition-colors rounded-xs" placeholder="Please specify details regarding your inquiry, destination country for shipping quotes, or custom parameters..."></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="pt-2 text-right">
+                        <button type="submit" class="w-full sm:w-auto px-10 py-4 bg-charcoal text-canvas text-xs uppercase tracking-[0.2em] hover:bg-accent transition-colors duration-300">
+                            Submit Inquiry
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-canvas-dark text-canvas/80 border-t border-charcoal py-16 px-6 lg:px-12 text-xs">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
+            
+            <div class="md:col-span-5 space-y-3">
+                <span class="font-serif text-2xl tracking-wide text-canvas block">ELENA VANCE</span>
+                <p class="text-canvas/60 text-xs font-light max-w-sm">
+                    All artworks, images, and visual materials shown are protected under international copyright law. © 2026 Elena Vance Studio.
+                </p>
+            </div>
+
+            <div class="md:col-span-3 space-y-2">
+                <h5 class="uppercase tracking-widest text-canvas/40 text-[10px] mb-3">Representation</h5>
+                <p class="text-canvas/80">Paris — Galerie L’Éther</p>
+                <p class="text-canvas/80">London — Vanguard Contemporary</p>
+            </div>
+
+            <div class="md:col-span-4 space-y-4">
+                <h5 class="uppercase tracking-widest text-canvas/40 text-[10px]">Studio Newsletter</h5>
+                <p class="text-canvas/60 text-xs font-light">Receive private previews of new series and exhibition invitations.</p>
+                
+                <form onsubmit="handleNewsletter(event)" class="flex gap-2">
+                    <input type="email" required placeholder="Enter email address" class="bg-canvas/10 border border-canvas/20 px-3 py-2 text-xs text-canvas focus:outline-none focus:border-canvas w-full">
+                    <button type="submit" class="bg-canvas text-charcoal px-4 py-2 uppercase tracking-wider hover:bg-canvas-muted transition-colors font-medium">Join</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="max-w-7xl mx-auto pt-12 mt-12 border-t border-canvas/10 flex flex-col sm:flex-row justify-between items-center text-[11px] text-canvas/40 gap-4">
+            <div>
+                © 2026 Elena Vance. All Rights Reserved.
+            </div>
+            <div class="flex space-x-6 tracking-widest uppercase">
+                <a href="#" class="hover:text-canvas transition-colors">Instagram</a>
+                <a href="#" class="hover:text-canvas transition-colors">Artsy</a>
+                <a href="#" class="hover:text-canvas transition-colors">Ocula</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div id="artwork-lightbox" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-10 hidden" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div class="modal-backdrop fixed inset-0 bg-black/80 backdrop-blur-sm opacity-0" onclick="closeLightbox()"></div>
+
+        <!-- Modal Wrapper -->
+        <div class="modal-content relative bg-canvas w-full max-w-6xl max-h-[92vh] overflow-y-auto rounded-xs shadow-2xl z-10 flex flex-col lg:flex-row opacity-0 scale-95 border border-bordercolor">
+            
+            <!-- Close Button -->
+            <button onclick="closeLightbox()" class="absolute top-4 right-4 z-20 text-charcoal/70 hover:text-charcoal bg-canvas/80 p-2 rounded-full backdrop-blur-md transition-colors" aria-label="Close modal">
+                <i class="ph ph-x text-2xl"></i>
+            </button>
+
+            <!-- Lightbox Image View (Left) -->
+            <div class="lg:w-7/12 bg-canvas-dark flex items-center justify-center p-6 lg:p-10 relative min-h-[350px] lg:min-h-[550px]">
+                <img id="modal-image" src="" alt="" class="max-h-[75vh] w-auto object-contain shadow-2xl transition-all duration-300">
+                
+                <!-- Nav Prev/Next Buttons on Image -->
+                <button onclick="navigateLightbox(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 text-canvas/70 hover:text-canvas bg-black/40 hover:bg-black/70 p-3 rounded-full transition-all" aria-label="Previous artwork">
+                    <i class="ph ph-caret-left text-xl"></i>
+                </button>
+                <button onclick="navigateLightbox(1)" class="absolute right-4 top-1/2 -translate-y-1/2 text-canvas/70 hover:text-canvas bg-black/40 hover:bg-black/70 p-3 rounded-full transition-all" aria-label="Next artwork">
+                    <i class="ph ph-caret-right text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Lightbox Details (Right) -->
+            <div class="lg:w-5/12 p-8 lg:p-12 flex flex-col justify-between space-y-6">
+                
+                <div class="space-y-6">
+                    <!-- Status Badge -->
+                    <div class="flex items-center justify-between">
+                        <span id="modal-category" class="text-[11px] uppercase tracking-[0.2em] text-stone font-medium">Category</span>
+                        <span id="modal-status" class="px-2.5 py-1 text-[10px] uppercase tracking-widest font-semibold rounded-full">Available</span>
+                    </div>
+
+                    <!-- Title & Year -->
+                    <div>
+                        <h3 id="modal-title" class="font-serif text-3xl lg:text-4xl text-charcoal font-normal leading-tight">Artwork Title</h3>
+                        <p id="modal-year-medium" class="text-stone text-xs tracking-wider uppercase mt-2">2024 · Medium</p>
+                    </div>
+
+                    <!-- Technical Specs Table -->
+                    <div class="py-4 border-y border-bordercolor space-y-2 text-xs">
+                        <div class="flex justify-between">
+                            <span class="text-stone">Dimensions:</span>
+                            <span id="modal-dimensions" class="text-charcoal font-medium">100 × 120 cm</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-stone">Framing:</span>
+                            <span id="modal-framing" class="text-charcoal">Raw oak tray frame (Included)</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-stone">Provenance:</span>
+                            <span id="modal-provenance" class="text-charcoal">Directly from Artist Studio</span>
+                        </div>
+                    </div>
+
+                    <!-- Description / Statement -->
+                    <div>
+                        <h4 class="text-xs uppercase tracking-widest text-stone mb-2">Curatorial Note</h4>
+                        <p id="modal-description" class="text-charcoal/80 text-sm leading-relaxed font-light">
+                            Detailed description of the artwork texture, glaze, and technique...
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <div class="pt-4">
+                    <button id="modal-inquire-btn" onclick="inquireFromModal()" class="w-full py-3.5 bg-charcoal text-canvas text-xs uppercase tracking-[0.2em] hover:bg-accent transition-colors duration-300 flex items-center justify-center gap-2">
+                        <i class="ph ph-envelope-simple"></i> Inquire About This Work
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Box (replaces alert) -->
+    <div id="toast-notification" class="fixed bottom-6 right-6 z-50 bg-charcoal text-canvas px-6 py-4 shadow-2xl rounded-xs text-xs tracking-wider flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 border border-canvas/20">
+        <i class="ph ph-check-circle text-accent text-xl"></i>
+        <span id="toast-message">Action completed successfully.</span>
+    </div>
+
+    <script>
+        // Comprehensive Artwork Data Structure
+        const artworksData = [
+            {
+                id: 'work-hero',
+                title: 'Whispers of Light in Autumn',
+                year: '2024',
+                medium: 'Oil and Cold Wax on Belgian Linen',
+                dimensions: '130 × 160 cm',
+                category: 'oil',
+                isRecent: true,
+                status: 'Available', // Available, Private Collection, Sold
+                image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1200&q=85',
+                framing: 'Unframed (Stretched canvas edge finished)',
+                provenance: 'Paris Studio Collection',
+                description: 'An exploration of transient atmospheric shift. Multi-layered oil glazes built over three months evoke the gentle dissolution of autumnal sunlight into dusk.'
+            },
+            {
+                id: 'work-2',
+                title: 'Monolith in Charcoal No. 4',
+                year: '2023',
+                medium: 'Charcoal, Compressed Graphite & Ash on Arches Paper',
+                dimensions: '76 × 102 cm',
+                category: 'drawings',
+                isRecent: false,
+                status: 'Private Collection',
+                image: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=1000&q=85',
+                framing: 'Museum Glass with Walnut Box Frame',
+                provenance: 'Acquired 2023 (Collection, Zurich)',
+                description: 'A study in raw density and negative space. Dense layers of powdered charcoal scraped back to expose raw cotton fibers.'
+            },
+            {
+                id: 'work-3',
+                title: 'Ethereal Horizon',
+                year: '2024',
+                medium: 'Oil and Mineral Pigments on Wood Panel',
+                dimensions: '100 × 100 cm',
+                category: 'oil',
+                isRecent: true,
+                status: 'Available',
+                image: 'https://images.unsplash.com/photo-1579541814924-49fda1438efc?auto=format&fit=crop&w=1000&q=85',
+                framing: 'Custom Floating Natural Oak Frame',
+                provenance: 'Directly from Artist Studio',
+                description: 'Soft subterranean tones contrasted against luminous horizon lines. Inspired by coastal light conditions along the Baltic Sea.'
+            },
+            {
+                id: 'work-4',
+                title: 'Gestural Study in Sanguine II',
+                year: '2024',
+                medium: 'Conté Crayon and Ink Wash on Hand-made Paper',
+                dimensions: '50 × 70 cm',
+                category: 'drawings',
+                isRecent: true,
+                status: 'Available',
+                image: 'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?auto=format&fit=crop&w=1000&q=85',
+                framing: 'UV Matte Glass with Custom Linen Passepartout',
+                provenance: 'Directly from Artist Studio',
+                description: 'A rapid intuitive drawing capturing fluid kinetic energy. Created during studio sessions in summer 2024.'
+            },
+            {
+                id: 'work-5',
+                title: 'Nocturne in Ochre & Slate',
+                year: '2023',
+                medium: 'Oil on Canvas',
+                dimensions: '140 × 180 cm',
+                category: 'oil',
+                isRecent: false,
+                status: 'Sold',
+                image: 'https://images.unsplash.com/photo-1549887534-1541e9326642?auto=format&fit=crop&w=1000&q=85',
+                framing: 'Deep Charcoal Shadow Box Frame',
+                provenance: 'Exhibited Galerie L’Éther, Paris',
+                description: 'Deep subterranean ochre hues layered with translucent slate glazes. Explores nocturnal silence and texture.'
+            },
+            {
+                id: 'work-6',
+                title: 'Prelude to Dawn',
+                year: '2024',
+                medium: 'Mixed Media & Oil on Linen',
+                dimensions: '110 × 140 cm',
+                category: 'oil',
+                isRecent: true,
+                status: 'Available',
+                image: 'https://images.unsplash.com/photo-1578926375605-eaf7559b1458?auto=format&fit=crop&w=1000&q=85',
+                framing: 'Raw Ash Frame',
+                provenance: 'Paris Studio Collection',
+                description: 'Soft transitions from violet shadow into pale golden light. Rich tactile surface with delicate scraping marks.'
+            }
+        ];
+
+        let currentLightboxIndex = 0;
+        let activeFilter = 'all';
+
+        function renderGallery() {
+            const galleryGrid = document.getElementById('gallery-grid');
+            galleryGrid.innerHTML = '';
+
+            const filteredWorks = artworksData.filter(work => {
+                if (activeFilter === 'all') return true;
+                if (activeFilter === 'oil') return work.category === 'oil';
+                if (activeFilter === 'drawings') return work.category === 'drawings';
+                if (activeFilter === 'recent') return work.isRecent === true;
+                return true;
+            });
+
+            filteredWorks.forEach((work) => {
+                // Find global index in artworksData
+                const globalIndex = artworksData.findIndex(w => w.id === work.id);
+
+                // Status pill styling
+                let statusBadge = '';
+                if (work.status === 'Available') {
+                    statusBadge = `<span class="bg-emerald-900/80 text-emerald-100 text-[10px] px-2.5 py-1 uppercase tracking-widest">Available</span>`;
+                } else if (work.status === 'Private Collection') {
+                    statusBadge = `<span class="bg-stone/80 text-canvas text-[10px] px-2.5 py-1 uppercase tracking-widest">Private Coll.</span>`;
+                } else {
+                    statusBadge = `<span class="bg-charcoal/80 text-canvas/70 text-[10px] px-2.5 py-1 uppercase tracking-widest">Sold</span>`;
+                }
+
+                const cardHtml = `
+                    <div class="artwork-card group cursor-pointer flex flex-col" onclick="openLightboxByIndex(${globalIndex})">
+                        <div class="relative overflow-hidden bg-stone/10 aspect-[4/5] rounded-xs mb-4">
+                            <img 
+                                src="${work.image}" 
+                                alt="${work.title}" 
+                                class="w-full h-full object-cover"
+                                loading="lazy"
+                                onerror="this.src='https://placehold.co/800x1000/f0eee9/333333?text=${encodeURIComponent(work.title)}'"
+                            />
+                            
+                            <!-- Overlay -->
+                            <div class="artwork-overlay absolute inset-0 bg-charcoal/40 backdrop-blur-[2px] flex flex-col justify-between p-6 text-canvas">
+                                <div class="flex justify-end">
+                                    ${statusBadge}
+                                </div>
+                                <div class="space-y-1">
+                                    <span class="text-[10px] uppercase tracking-[0.2em] text-canvas/70">${work.dimensions}</span>
+                                    <h3 class="font-serif text-2xl font-normal text-canvas">${work.title}</h3>
+                                    <p class="text-xs text-canvas/80 font-light">${work.medium}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-baseline pt-1">
+                            <div>
+                                <h3 class="font-serif text-xl text-charcoal group-hover:text-accent transition-colors">${work.title}</h3>
+                                <p class="text-xs text-stone font-light">${work.year} · ${work.medium}</p>
+                            </div>
+                            <span class="text-xs text-stone font-light">${work.dimensions}</span>
+                        </div>
+                    </div>
+                `;
+                galleryGrid.insertAdjacentHTML('beforeend', cardHtml);
+            });
+        }
+
+        function setupFilters() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    filterBtns.forEach(b => {
+                        b.classList.remove('active', 'bg-charcoal', 'text-canvas');
+                        b.classList.add('border-bordercolor', 'text-charcoal/70');
+                    });
+
+                    e.target.classList.add('active', 'bg-charcoal', 'text-canvas');
+                    e.target.classList.remove('border-bordercolor', 'text-charcoal/70');
+
+                    activeFilter = e.target.getAttribute('data-filter');
+                    renderGallery();
+                });
+            });
+        }
+
+        function openLightboxByIndex(index) {
+            currentLightboxIndex = index;
+            updateLightboxContent();
+
+            const modal = document.getElementById('artwork-lightbox');
+            const backdrop = modal.querySelector('.modal-backdrop');
+            const content = modal.querySelector('.modal-content');
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+
+            // Trigger reflow for transition
+            setTimeout(() => {
+                backdrop.classList.remove('opacity-0');
+                backdrop.classList.add('opacity-100');
+                content.classList.remove('opacity-0', 'scale-95');
+                content.classList.add('opacity-100', 'scale-100');
+            }, 10);
+        }
+
+        function openLightboxById(id) {
+            const index = artworksData.findIndex(w => w.id === id);
+            if (index !== -1) {
+                openLightboxByIndex(index);
+            }
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('artwork-lightbox');
+            const backdrop = modal.querySelector('.modal-backdrop');
+            const content = modal.querySelector('.modal-content');
+
+            backdrop.classList.remove('opacity-100');
+            backdrop.classList.add('opacity-0');
+            content.classList.remove('opacity-100', 'scale-100');
+            content.classList.add('opacity-0', 'scale-95');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        function navigateLightbox(direction) {
+            currentLightboxIndex = (currentLightboxIndex + direction + artworksData.length) % artworksData.length;
+            updateLightboxContent();
+        }
+
+        function updateLightboxContent() {
+            const work = artworksData[currentLightboxIndex];
+            
+            document.getElementById('modal-image').src = work.image;
+            document.getElementById('modal-image').alt = work.title;
+            document.getElementById('modal-title').innerText = work.title;
+            document.getElementById('modal-category').innerText = work.category === 'oil' ? 'Oil Painting' : 'Drawing / Sketch';
+            document.getElementById('modal-year-medium').innerText = `${work.year} · ${work.medium}`;
+            document.getElementById('modal-dimensions').innerText = work.dimensions;
+            document.getElementById('modal-framing').innerText = work.framing;
+            document.getElementById('modal-provenance').innerText = work.provenance;
+            document.getElementById('modal-description').innerText = work.description;
+
+            // Status Styling
+            const statusEl = document.getElementById('modal-status');
+            const inquireBtn = document.getElementById('modal-inquire-btn');
+
+            if (work.status === 'Available') {
+                statusEl.className = 'px-2.5 py-1 text-[10px] uppercase tracking-widest font-semibold rounded-full bg-emerald-900/10 text-emerald-800 border border-emerald-800/20';
+                statusEl.innerText = 'Available';
+                inquireBtn.innerText = 'Inquire About This Work';
+                inquireBtn.disabled = false;
+            } else if (work.status === 'Private Collection') {
+                statusEl.className = 'px-2.5 py-1 text-[10px] uppercase tracking-widest font-semibold rounded-full bg-stone/20 text-stone border border-stone/30';
+                statusEl.innerText = 'Private Collection';
+                inquireBtn.innerText = 'Inquire (Archival Interest)';
+            } else {
+                statusEl.className = 'px-2.5 py-1 text-[10px] uppercase tracking-widest font-semibold rounded-full bg-charcoal/10 text-charcoal/60 border border-charcoal/20';
+                statusEl.innerText = 'Sold';
+                inquireBtn.innerText = 'Request Similar Commission';
+            }
+        }
+
+        function inquireFromModal() {
+            const work = artworksData[currentLightboxIndex];
+            closeLightbox();
+
+            // Prefill subject/reference in contact form
+            const refContainer = document.getElementById('artwork-ref-container');
+            const refTitle = document.getElementById('artwork-ref-title');
+            
+            refTitle.innerText = `"${work.title}" (${work.year})`;
+            refContainer.classList.remove('hidden');
+
+            const messageBox = document.getElementById('message');
+            messageBox.value = `I am interested in acquiring or receiving further details regarding "${work.title}" (${work.year}, ${work.dimensions}).`;
+
+            // Scroll to inquiry section smoothly
+            document.getElementById('inquiry').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function clearArtworkRef() {
+            document.getElementById('artwork-ref-container').classList.add('hidden');
+            document.getElementById('artwork-ref-title').innerText = '';
+        }
+
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            showToast(`Thank you, ${name}. Your inquiry has been sent to the gallery.`);
+            
+            // Reset form
+            this.reset();
+            clearArtworkRef();
+        });
+
+        function handleNewsletter(e) {
+            e.preventDefault();
+            showToast('Thank you for subscribing to studio updates.');
+            e.target.reset();
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.innerText = message;
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 4000);
+        }
+
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Keydown handlers for Lightbox (Esc, Left/Right arrow)
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('artwork-lightbox');
+            if (!modal.classList.contains('hidden')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                if (e.key === 'ArrowRight') navigateLightbox(1);
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderGallery();
+            setupFilters();
+        });
+    </script>
+</body>
+</html>
